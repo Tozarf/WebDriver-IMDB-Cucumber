@@ -1,8 +1,9 @@
 import { Given, When, Then } from "@wdio/cucumber-framework";
+import darkKnightPage from "../pageobjects/darkKnight.page";
 import HomePage from "../pageobjects/home.page";
 import top250Page from "../pageobjects/top250.page";
 
-Given(/^I am on the login page$/, async () => {
+Given(/^I am on the home page$/, async () => {
     await HomePage.open();
 });
 
@@ -23,4 +24,13 @@ Then(
         );
         await expect(top250Page.godFatherRating).toHaveText("9,1");
     }
+);
+
+When(/^I click on the The Dark Knight title$/, async () => {
+    await top250Page.clickDarkKnight();
+});
+
+Then(
+    /^I should see that the jwplayer is displayed and it is not playing$/,
+    async () => {}
 );
