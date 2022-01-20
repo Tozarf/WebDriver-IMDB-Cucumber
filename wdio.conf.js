@@ -20,7 +20,7 @@ exports.config = {
     // then the current working directory is where your `package.json` resides, so `wdio`
     // will be called from there.
     //
-    specs: ["./features/**/DarkKnight.feature"],
+    specs: ["./features/**/**.feature"],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -131,7 +131,16 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ["spec"],
+    reporters: [
+        [
+            "allure",
+            {
+                outputDir: "allure-results",
+                disableWebdriverStepsReporting: true,
+                disableWebdriverScreenshotsReporting: true,
+            },
+        ],
+    ],
 
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
