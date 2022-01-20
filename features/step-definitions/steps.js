@@ -32,5 +32,30 @@ When(/^I click on the The Dark Knight title$/, async () => {
 
 Then(
     /^I should see that the jwplayer is displayed and it is not playing$/,
-    async () => {}
+    async () => {
+        const playerState = await browser.execute(() => {
+            return jwplayer().getState();
+        });
+        await expect(darkKnightPage.videoContainer).toBeDisplayed();
+        await expect(playerState).toEqual("buffering");
+    }
 );
+
+When(
+    /^I enter the input The Dark Knight on the search bar and click on the first result$/,
+    async () => {
+        await HomePage.submitSearch("The Dark Knight");
+    }
+);
+
+When(/^I click on the play trailer button$/, async () => {
+    await darkKnightPage.clickPlayTrailerButton();
+});
+
+Then(/^I can see the video playing$/, async () => {
+    await darkKnightPage.timeLineController.waitForExist();
+    const playerSate = await browser.execute(() => {
+        return jwplayer().getState();
+    });
+    await expect(playerSate).toEqual("playing");
+});
